@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react';
+import {Navigate} from "react-router-dom"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
-
+import { auth ,db} from '../firebaseConfig';
+import { setDoc , doc} from "firebase/firestore";
 const Login = () => {
-  const [userInfo, setUserInfo] = useState({ email: '', password: '' });
-
+  const [userInfo, setUserInfo] = useState({name:'',lastName:"", email: '', password: '' });
+  
   const handleChange = (event) => {
     setUserInfo({ ...userInfo, [event.target.name]: event.target.value });
     console.log(userInfo);
@@ -19,7 +20,14 @@ const Login = () => {
         userInfo.password
       );
       const user = auth.currentUser;
-      console.log(user);
+      console.log(user)
+      if(user){
+        await setDoc(doc(db,"Users",user.uid),{
+         newUser:userInfo
+
+        })
+      }
+      <Navigate to ="/" replace={true}/>
       console.log('Well Done');
     } catch (error) {
       console.log(error);
@@ -28,13 +36,28 @@ const Login = () => {
 
   return (
     <div className="row mt-5">
+        
       <div className="col"></div>
       <div className="col">
         <form className="form-group" onSubmit={userRegister}>
+        <input
+            type="text"
+            name="name"
+            className="form-control mt-4"
+            placeholder="Type Your Name"
+            onChange={handleChange}
+          />
+           <input
+            type="text"
+            name="lastName"
+            className="form-control mt-4"
+            placeholder="Type Your LastName"
+            onChange={handleChange}
+          />
           <input
             type="email"
             name="email"
-            className="form-control"
+            className="form-control mt-4"
             placeholder="Type Your Email"
             onChange={handleChange}
           />

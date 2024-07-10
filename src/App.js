@@ -1,20 +1,19 @@
 import './App.css';
 import {Routes , Route} from "react-router-dom"
-import Inicio from './components/Inicio';
-import Admin from './components/Admin';
-import Login from './components/Login';
+import Register from './pages/Register';
+import Home from './pages/Home';
+import Login from './pages/Login';
 import Menu from './components/Menu';
 function App() {
   return (
     <div className="container">
       <Menu/>
      <Routes>
-      <Route  path="/" element={<Inicio/>}/>
-      <Route path="/admin" element={<Admin/>}/>
-      <Route path="/login" element= {<Login/>}/>
-
-
-     </Routes>
+     <Route path="/" element={<Home/>}/>
+     <Route path="/login" element= {<Login/>}/>
+      <Route  path="/register" element={<Register/>}/>
+      
+      </Routes>
 
  
   
