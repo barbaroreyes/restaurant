@@ -1,5 +1,5 @@
 import{useState}from 'react';
-import {auth} from "../firebaseConfig"
+import auth from "../firebaseConfig"
 
 const Login = () => {
     const [userInfo , setUserInfo]  = useState({email: '', password:""});
@@ -7,13 +7,28 @@ const Login = () => {
   const handleChange = (event) => {
     setUserInfo({...userInfo,[event.target.name]:event.target.value});
   }
+ 
+  const userRegistrer = (e) =>{
+    e.preventDefault();
+      alert("User Registered")
+    try {
+        auth.createUserWithEmailAndPassword(userInfo.email, userInfo.password)
+          
+            .catch(function (error) {
+              console.log(error)
+            });
+        
+    } catch (error) {
+        
+    }
 
+  }
 
   return (
     <div className="row mt-5">
       <div className="col"></div>
       <div className="col">
-        <form className='form-group'>
+        <form className='form-group' onSubmit={userRegistrer}>
             <input 
             type = "email"
             name = {userInfo.name}
