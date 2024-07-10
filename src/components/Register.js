@@ -1,9 +1,10 @@
 import React, { useState  } from 'react';
-import {Navigate} from "react-router-dom"
+import {useNavigate,Link} from "react-router-dom"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth ,db} from '../firebaseConfig';
 import { setDoc , doc} from "firebase/firestore";
 const Login = () => {
+  const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({name:'',lastName:"", email: '', password: '' });
   
   const handleChange = (event) => {
@@ -26,8 +27,9 @@ const Login = () => {
          newUser:userInfo
 
         })
+        navigate("/");
       }
-      <Navigate to ="/" replace={true}/>
+      
       console.log('Well Done');
     } catch (error) {
       console.log(error);
@@ -74,6 +76,7 @@ const Login = () => {
             value="User Register"
           />
         </form>
+        <span>do you account already go to  <Link to="/login">Login</Link></span>
       </div>
       <div className="col"></div>
     </div>
